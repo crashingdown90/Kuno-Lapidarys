@@ -1,0 +1,166 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import PostCard from '@/components/PostCard.astro';
+import Button from '@/components/Button.astro';
+import { getPostBySlug, getAllPosts, getRelatedPosts, urlFor, formatDate } from '@/lib/sanity';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts(100); // Get more posts for static generation
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = await getPostBySlug(slug);
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const relatedPosts = await getRelatedPosts(post._id);
+
+// Generate image URL for hero
+const heroImage = post.coverImage 
+  ? urlFor(post.coverImage).width(1600).height(900).url()
+  : '/placeholder-blog.jpg';
+
+// SEO metadata
+const seoTitle = post.seo?.metaTitle || post.title;
+const seoDescription = post.seo?.metaDescription || post.excerpt || '';
+const seoImage = post.seo?.ogImage 
+  ? urlFor(post.seo.ogImage).width(1200).height(630).url()
+  : heroImage;
+---
+
+<BaseLayout 
+  title={seoTitle}
+  description={seoDescription}
+  image={seoImage}
+  canonicalUrl={`https://kunolapidary.com/blog/${slug}`}
+>
+  <article>
+    <!-- Hero Image -->
+    <div class="relative h-[400px] md:h-[500px] bg-gray-100">
+      <img 
+        src={heroImage}
+        alt={post.coverImage?.alt || post.title}
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+    </div>
+
+    <Section>
+      <div class="max-w-4xl mx-auto">
+        <!-- Article Header -->
+        <header class="mb-8 text-center">
+          <div class="flex items-center justify-center gap-3 text-sm text-gray-600 mb-4">
+            <time datetime={post.publishedAt}>
+              {formatDate(post.publishedAt)}
+            </time>
+            {post.categories && post.categories.length > 0 && (
+              <>
+                <span class="text-gray-400">•</span>
+                {post.categories.map((cat, index) => (
+                  <>
+                    {index > 0 && ', '}
+                    <a 
+                      href={`/blog?category=${cat.slug}`}
+                      class="text-brand-blue hover:text-brand-brown transition-colors"
+                    >
+                      {cat.title}
+                    </a>
+                  </>
+                ))}
+              </>
+            )}
+          </div>
+
+          <h1 class="text-3xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
+            {post.title}
+          </h1>
+
+          {post.excerpt && (
+            <p class="text-lg text-gray-600 italic max-w-3xl mx-auto">
+              {post.excerpt}
+            </p>
+          )}
+
+          {post.author && (
+            <div class="mt-6 flex items-center justify-center">
+              <a 
+                href={`/lapidarys/${post.author.slug}`}
+                class="flex items-center space-x-3 group"
+              >
+                {post.author.portrait && (
+                  <img 
+                    src={urlFor(post.author.portrait).width(48).height(48).url()}
+                    alt={post.author.name}
+                    class="w-12 h-12 rounded-full object-cover"
+                  />
+                )}
+                <div class="text-left">
+                  <p class="font-medium text-gray-900 group-hover:text-brand-blue transition-colors">
+                    {post.author.name}
+                  </p>
+                  {post.author.role && (
+                    <p class="text-sm text-gray-600">
+                      {post.author.role}
+                    </p>
+                  )}
+                </div>
+              </a>
+            </div>
+          )}
+        </header>
+
+        <!-- Article Content -->
+        <div class="prose prose-lg max-w-none prose-headings:font-serif prose-a:text-brand-blue hover:prose-a:text-brand-brown">
+          {/* Portable Text content would be rendered here */}
+          <p class="text-gray-600 italic">
+            [Article content would be rendered here using Portable Text renderer]
+          </p>
+        </div>
+
+        <!-- Tags -->
+        {post.tags && post.tags.length > 0 && (
+          <div class="mt-12 pt-8 border-t border-gray-200">
+            <div class="flex flex-wrap gap-2">
+              <span class="text-sm text-gray-600 mr-2">Tags:</span>
+              {post.tags.map((tag) => (
+                <a
+                  href={`/blog?tag=${tag.slug}`}
+                  class="inline-block px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-full hover:bg-brand-tan/20 hover:text-brand-brown transition-colors"
+                >
+                  {tag.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </Section>
+
+    <!-- Related Posts -->
+    {relatedPosts && relatedPosts.length > 0 && (
+      <Section variant="light">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-8 text-center">
+            Related Articles
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {relatedPosts.map((relatedPost) => (
+              <PostCard post={relatedPost} />
+            ))}
+          </div>
+        </div>
+      </Section>
+    )}
+  </article>
+
+  <div slot="head">
+    <meta property="article:published_time" content={post.publishedAt} />
+    {post.author && <meta property="article:author" content={post.author.name} />}
+  </div>
+</BaseLayout>

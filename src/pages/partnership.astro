@@ -1,0 +1,198 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Button from '@/components/Button.astro';
+import { getAllPartnerships } from '@/lib/sanity';
+
+const partnerships = await getAllPartnerships();
+
+const partnerTypes = [
+  {
+    type: 'gallery',
+    title: 'Gallery Partnerships',
+    description: 'Showcase our exceptional pieces in your gallery space. We offer consignment options, exclusive collections, and collaborative exhibitions.',
+    benefits: [
+      'Curated collections for your clientele',
+      'Marketing support and materials',
+      'Artist talks and demonstrations',
+      'Flexible consignment terms',
+    ],
+  },
+  {
+    type: 'designer',
+    title: 'Designer Collaborations',
+    description: 'Work with our master artisans to bring your creative visions to life. From custom commissions to limited edition series.',
+    benefits: [
+      'Direct access to master craftspeople',
+      'Custom stone cutting and shaping',
+      'Material sourcing assistance',
+      'Technical consultation',
+    ],
+  },
+  {
+    type: 'wholesale',
+    title: 'Wholesale Programs',
+    description: 'Stock your boutique or store with our signature pieces. Competitive pricing for qualified retailers.',
+    benefits: [
+      'Volume discounts available',
+      'Seasonal collections',
+      'Product training for staff',
+      'Dedicated account management',
+    ],
+  },
+  {
+    type: 'export',
+    title: 'International Export',
+    description: 'We handle global shipping and customs documentation for international partners and collectors.',
+    benefits: [
+      'Worldwide shipping capabilities',
+      'Customs documentation support',
+      'Multi-currency transactions',
+      'International warranty coverage',
+    ],
+  },
+];
+---
+
+<BaseLayout title="Partnership">
+  <!-- Hero Section -->
+  <Section variant="tan" size="lg">
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6 reveal-fade">
+        Partner With Us
+      </h1>
+      <p class="text-lg md:text-xl text-gray-700 leading-relaxed reveal-fade" style="transition-delay: 100ms;">
+        Join our network of galleries, designers, and retailers bringing exceptional 
+        lapidary art to collectors and enthusiasts worldwide.
+      </p>
+    </div>
+  </Section>
+
+  <!-- Partnership Types -->
+  <Section variant="default">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {partnerTypes.map((partner, index) => (
+          <div 
+            class="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow reveal-fade-up"
+            style={`transition-delay: ${100 + index * 100}ms;`}
+          >
+            <h3 class="text-2xl font-serif font-semibold text-gray-900 mb-4">
+              {partner.title}
+            </h3>
+            <p class="text-gray-600 mb-6">
+              {partner.description}
+            </p>
+            <ul class="space-y-3">
+              {partner.benefits.map((benefit) => (
+                <li class="flex items-start">
+                  <svg class="w-5 h-5 text-brand-blue mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span class="text-gray-600">
+                    {benefit}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- Current Partners -->
+  {partnerships && partnerships.length > 0 && (
+    <Section variant="light">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+          Our Partners
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto reveal-fade" style="transition-delay: 100ms;">
+          Proud to work with leading galleries and designers worldwide
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {partnerships.map((partner, index) => (
+          <div 
+            class="flex items-center justify-center p-6 bg-white rounded-lg reveal-fade-up"
+            style={`transition-delay: ${200 + index * 50}ms;`}
+          >
+            {partner.logo ? (
+              <img 
+                src={urlFor(partner.logo).width(200).height(100).url()} 
+                alt={partner.title}
+                class="max-h-16 w-auto opacity-70 hover:opacity-100 transition-opacity"
+              />
+            ) : (
+              <span class="text-gray-400 font-serif">
+                {partner.title}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  <!-- Process Section -->
+  <Section variant="default">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+          How It Works
+        </h2>
+        <p class="text-lg text-gray-600 reveal-fade" style="transition-delay: 100ms;">
+          Starting a partnership is simple
+        </p>
+      </div>
+
+      <div class="space-y-8">
+        {[
+          { step: '1', title: 'Initial Consultation', description: 'Schedule a call to discuss your needs and explore partnership options.' },
+          { step: '2', title: 'Proposal & Terms', description: 'Receive a customized partnership proposal with terms tailored to your business.' },
+          { step: '3', title: 'Sample Selection', description: 'Choose from our collection or request custom samples for evaluation.' },
+          { step: '4', title: 'Launch Partnership', description: 'Begin our collaboration with full support from our dedicated team.' },
+        ].map((item, index) => (
+          <div 
+            class="flex items-start space-x-4 reveal-fade-up"
+            style={`transition-delay: ${200 + index * 100}ms;`}
+          >
+            <div class="flex-shrink-0 w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-serif font-bold">
+              {item.step}
+            </div>
+            <div>
+              <h4 class="text-xl font-serif font-semibold text-gray-900 mb-2">
+                {item.title}
+              </h4>
+              <p class="text-gray-600">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section variant="tan">
+    <div class="text-center max-w-3xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+        Ready to Partner?
+      </h2>
+      <p class="text-lg text-gray-600 mb-8 reveal-fade" style="transition-delay: 100ms;">
+        Let's discuss how we can work together to bring exceptional lapidary art to your clients
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-fade-up" style="transition-delay: 200ms;">
+        <Button href="/contact?purpose=Partnership" size="lg">
+          Start Partnership Discussion
+        </Button>
+        <Button href="mailto:partnership@kunolapidary.com" variant="outline" size="lg">
+          Email Partnership Team
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

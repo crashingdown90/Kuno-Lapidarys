@@ -1,0 +1,161 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Button from '@/components/Button.astro';
+
+const philosophy = [
+  {
+    title: 'Precision',
+    description: 'Every cut, every polish, every detail is executed with meticulous attention and technical excellence.',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
+  },
+  {
+    title: 'Integrity', 
+    description: 'We source ethically, work transparently, and stand behind every piece that bears our name.',
+    icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z'
+  },
+  {
+    title: 'Artistry',
+    description: 'Beyond technique lies creativity—transforming raw stone into objects of enduring beauty.',
+    icon: 'M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z'
+  }
+];
+
+const timeline = [
+  { year: '2015', event: 'Founded in a small workshop in Central Java' },
+  { year: '2017', event: 'First international exhibition in Bangkok' },
+  { year: '2019', event: 'Expanded workshop and welcomed new artisans' },
+  { year: '2021', event: 'Launched online presence and global shipping' },
+  { year: '2023', event: 'Celebrated 1000th custom commission' },
+  { year: '2024', event: 'Opening partnerships with luxury galleries worldwide' },
+];
+---
+
+<BaseLayout title="About Us">
+  <!-- Hero Section -->
+  <Section variant="tan" size="lg">
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6 reveal-fade">
+        Our Story
+      </h1>
+      <p class="text-lg md:text-xl text-gray-700 leading-relaxed reveal-fade" style="transition-delay: 100ms;">
+        KUNO & Co. Lapidary Works began as a passion project in a modest workshop in Central Java. 
+        What started as one artisan's dedication to reviving traditional stone-working techniques 
+        has grown into a collective of master craftspeople, each bringing their unique expertise 
+        to create exceptional works of lapidary art.
+      </p>
+    </div>
+  </Section>
+
+  <!-- Workshop Image -->
+  <Section variant="default" size="sm" container={false}>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl overflow-hidden aspect-video bg-gray-100 reveal-scale">
+        <img 
+          src="/workshop-hero.jpg" 
+          alt="KUNO & Co. workshop"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  </Section>
+
+  <!-- Philosophy Section -->
+  <Section variant="default">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+          Our Philosophy
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto reveal-fade" style="transition-delay: 100ms;">
+          Three principles guide every piece we create
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {philosophy.map((item, index) => (
+          <div 
+            class="text-center reveal-fade-up"
+            style={`transition-delay: ${200 + index * 100}ms;`}
+          >
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={item.icon}></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-serif font-semibold text-gray-900 mb-3">
+              {item.title}
+            </h3>
+            <p class="text-gray-600">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- Timeline Section -->
+  <Section variant="light">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+          Our Journey
+        </h2>
+      </div>
+
+      <div class="relative">
+        <!-- Timeline Line -->
+        <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-brand-tan"></div>
+
+        <!-- Timeline Items -->
+        <div class="space-y-12">
+          {timeline.map((item, index) => (
+            <div 
+              class={`relative flex items-center ${
+                index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'
+              } reveal-fade-up`}
+              style={`transition-delay: ${100 + index * 100}ms;`}
+            >
+              <div class={`flex items-center w-full md:w-1/2 ${
+                index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
+              }`}>
+                <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-brand-brown rounded-full"></div>
+                <div class={`ml-20 md:ml-0 bg-white p-6 rounded-lg shadow-sm border border-gray-100 ${
+                  index % 2 === 0 ? 'md:text-right' : 'md:text-left'
+                }`}>
+                  <span class="text-brand-blue font-serif font-bold text-lg">
+                    {item.year}
+                  </span>
+                  <p class="mt-2 text-gray-600">
+                    {item.event}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section variant="default">
+    <div class="text-center">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+        Experience Our Craft
+      </h2>
+      <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto reveal-fade" style="transition-delay: 100ms;">
+        Visit our workshop or explore our collection online to discover the beauty of handcrafted lapidary art
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-fade-up" style="transition-delay: 200ms;">
+        <Button href="/lapidarys" size="lg">
+          Meet Our Artisans
+        </Button>
+        <Button href="https://shop.kunolapidary.com" target="_blank" variant="outline" size="lg">
+          Browse Collection
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

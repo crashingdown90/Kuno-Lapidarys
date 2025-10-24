@@ -1,0 +1,21 @@
+---
+export interface Props {
+  ga4Id?: string;
+}
+
+const { ga4Id } = Astro.props;
+const isProd = import.meta.env.PROD;
+---
+
+{ga4Id && isProd && (
+  <>
+    <!-- Google Analytics 4 -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+    <script set:html={`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${ga4Id}');
+    `}></script>
+  </>
+)}

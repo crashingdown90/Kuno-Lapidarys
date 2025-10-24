@@ -1,37 +1,38 @@
 {
-  "name": "kunolapidary-sanity",
-  "private": true,
+  "name": "kuno-lapidary",
+  "type": "module",
   "version": "1.0.0",
-  "main": "package.json",
-  "license": "UNLICENSED",
+  "private": true,
   "scripts": {
-    "dev": "sanity dev",
-    "start": "sanity start",
-    "build": "sanity build",
-    "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.astro",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,astro,json,md}\"",
+    "typecheck": "tsc --noEmit",
+    "sanity:dev": "sanity dev",
+    "sanity:deploy": "sanity deploy",
+    "deploy": "vercel --prod"
   },
-  "keywords": [
-    "sanity"
-  ],
   "dependencies": {
-    "@sanity/vision": "^4.11.0",
-    "react": "^19.1",
-    "react-dom": "^19.1",
-    "sanity": "^4.11.0",
-    "styled-components": "^6.1.18"
+    "@astrojs/sitemap": "^3.2.0",
+    "@astrojs/tailwind": "^5.1.2",
+    "@sanity/client": "^6.22.0",
+    "@sanity/image-url": "^1.1.0",
+    "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^5.0.2",
-    "@types/react": "^19.1",
-    "eslint": "^9.28",
-    "prettier": "^3.5",
-    "typescript": "^5.8"
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
+    "@astrojs/vercel": "^8.2.11",
+    "@types/node": "^22.18.12",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "astro": "^5.14.8",
+    "eslint": "^8.57.0",
+    "eslint-plugin-astro": "^1.2.0",
+    "prettier": "^3.3.0",
+    "prettier-plugin-astro": "^0.14.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
+    "sanity": "^3.50.0",
+    "typescript": "^5.9.3"
   }
 }

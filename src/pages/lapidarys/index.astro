@@ -1,0 +1,63 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import LapidaryCard from '@/components/LapidaryCard.astro';
+import { getAllLapidarys } from '@/lib/sanity';
+
+const lapidarys = await getAllLapidarys();
+---
+
+<BaseLayout title="Our Lapidarys">
+  <Section>
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+          Our Master Artisans
+        </h1>
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto reveal-fade" style="transition-delay: 100ms;">
+          Meet the skilled craftspeople behind every piece. Each brings years of experience, 
+          unique techniques, and an unwavering commitment to excellence in lapidary arts.
+        </p>
+      </div>
+
+      <!-- Lapidarys Grid -->
+      {lapidarys && lapidarys.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+          {lapidarys.map((lapidary, index) => (
+            <div 
+              class="reveal-fade-up"
+              style={`transition-delay: ${100 + index * 50}ms;`}
+            >
+              <LapidaryCard lapidary={lapidary} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-gray-600 mb-4">Our artisan profiles are coming soon.</p>
+        </div>
+      )}
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section variant="light">
+    <div class="text-center max-w-3xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 reveal-fade">
+        Commission a Custom Piece
+      </h2>
+      <p class="text-lg text-gray-600 mb-8 reveal-fade" style="transition-delay: 100ms;">
+        Work directly with our master artisans to create a one-of-a-kind piece tailored to your vision
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-fade-up" style="transition-delay: 200ms;">
+        <Button href="/contact?purpose=Custom Order" size="lg">
+          Start Your Commission
+        </Button>
+        <Button href="https://shop.kunolapidary.com" target="_blank" variant="outline" size="lg">
+          Browse Collection
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

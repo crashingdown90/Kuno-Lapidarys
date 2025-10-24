@@ -1,0 +1,161 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Button from '@/components/Button.astro';
+import { getLapidaryBySlug, getAllLapidarys, urlFor } from '@/lib/sanity';
+
+export async function getStaticPaths() {
+  const lapidarys = await getAllLapidarys();
+  return lapidarys.map((lapidary) => ({
+    params: { slug: lapidary.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const lapidary = await getLapidaryBySlug(slug);
+
+if (!lapidary) {
+  return Astro.redirect('/404');
+}
+
+const portraitUrl = lapidary.portrait
+  ? urlFor(lapidary.portrait).width(600).height(750).url()
+  : '/placeholder-portrait.jpg';
+---
+
+<BaseLayout title={`${lapidary.name} - Master Artisan`}>
+  <Section>
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+        <!-- Portrait & Info -->
+        <div class="lg:col-span-2">
+          <div class="sticky top-24">
+            <div class="rounded-lg overflow-hidden bg-gray-50 aspect-[4/5] mb-6">
+              <img 
+                src={portraitUrl}
+                alt={lapidary.portrait?.alt || lapidary.name}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            
+            <div class="text-center lg:text-left">
+              <h1 class="text-3xl font-serif font-bold text-gray-900 mb-2">
+                {lapidary.name}
+              </h1>
+              {lapidary.role && (
+                <p class="text-lg text-gray-600 mb-4">
+                  {lapidary.role}
+                </p>
+              )}
+
+              {/* Skills */}
+              {lapidary.skills && lapidary.skills.length > 0 && (
+                <div class="mb-6">
+                  <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider mb-3">
+                    Specializations
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    {lapidary.skills.map((skill) => (
+                      <span class="inline-block px-3 py-1 text-sm font-medium text-brand-brown bg-brand-tan/30 rounded-full">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Techniques */}
+              {lapidary.techniques && lapidary.techniques.length > 0 && (
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider mb-3">
+                    Techniques
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    {lapidary.techniques.map((technique) => (
+                      <span class="inline-block px-3 py-1 text-sm text-gray-600 bg-gray-100 rounded-full">
+                        {technique}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <!-- Bio & Gallery -->
+        <div class="lg:col-span-3">
+          {/* Biography */}
+          <div class="mb-12">
+            <h2 class="text-2xl font-serif font-semibold text-gray-900 mb-6">
+              Biography
+            </h2>
+            <div class="prose prose-lg max-w-none text-gray-600">
+              {/* Portable Text bio would be rendered here */}
+              <p>
+                [Artist biography would be rendered here using Portable Text renderer]
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                exercitation ullamco laboris.
+              </p>
+              <p>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+              </p>
+            </div>
+          </div>
+
+          {/* Work Gallery */}
+          {lapidary.gallery && lapidary.gallery.length > 0 && (
+            <div>
+              <h2 class="text-2xl font-serif font-semibold text-gray-900 mb-6">
+                Featured Works
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {lapidary.gallery.map((image, index) => (
+                  <div class="group relative overflow-hidden rounded-lg bg-gray-50 aspect-square">
+                    <img 
+                      src={urlFor(image).width(600).height(600).url()}
+                      alt={image.alt || `Work by ${lapidary.name}`}
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {image.caption && (
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="absolute bottom-4 left-4 right-4 text-white text-sm">
+                          {image.caption}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section variant="light">
+    <div class="text-center max-w-3xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">
+        Commission a Piece
+      </h2>
+      <p class="text-lg text-gray-600 mb-8">
+        Work with {lapidary.name} to create a custom piece tailored to your vision
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button href="/contact?purpose=Custom Order" size="lg">
+          Start Your Commission
+        </Button>
+        <Button href="/lapidarys" variant="outline" size="lg">
+          View All Artisans
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
