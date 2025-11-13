@@ -1,0 +1,84 @@
+---
+interface Step {
+  number: number;
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+interface Props {
+  steps?: Step[];
+}
+
+const defaultSteps: Step[] = [
+  {
+    number: 1,
+    title: 'Consultation & Design',
+    description: 'We discuss your vision, requirements, and select the perfect stone for your project.',
+    icon: '💎'
+  },
+  {
+    number: 2,
+    title: 'Stone Selection',
+    description: 'Choose from our curated collection or source a specific gemstone to match your needs.',
+    icon: '🔍'
+  },
+  {
+    number: 3,
+    title: 'Cutting & Shaping',
+    description: 'Our master craftsmen precisely cut and shape the stone using traditional and modern techniques.',
+    icon: '⚒️'
+  },
+  {
+    number: 4,
+    title: 'Polishing & Finishing',
+    description: 'Multiple stages of polishing create the perfect luster and reveal the stone\'s true beauty.',
+    icon: '✨'
+  },
+  {
+    number: 5,
+    title: 'Quality Check & Delivery',
+    description: 'Rigorous quality inspection ensures perfection before secure packaging and delivery.',
+    icon: '📦'
+  },
+];
+
+const { steps = defaultSteps } = Astro.props;
+---
+
+<div class="process-timeline relative">
+  <!-- Vertical Line (desktop) -->
+  <div class="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-brand-tan"></div>
+
+  <div class="space-y-8">
+    {steps.map((step, index) => (
+      <div
+        class="relative flex gap-6 reveal-fade-up"
+        style={`transition-delay: ${index * 100}ms;`}
+      >
+        <!-- Number Circle -->
+        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-xl font-serif z-10 relative">
+          <span class="text-2xl">{step.icon || step.number}</span>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 pb-8">
+          <h3 class="text-xl font-serif font-semibold text-gray-900 mb-2">
+            {step.title}
+          </h3>
+          <p class="text-gray-600 leading-relaxed">
+            {step.description}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  @media (max-width: 768px) {
+    .process-timeline {
+      padding-left: 0;
+    }
+  }
+</style>

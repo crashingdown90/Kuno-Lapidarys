@@ -1,0 +1,112 @@
+---
+interface Props {
+  variant?: 'default' | 'minimal';
+  title?: string;
+  description?: string;
+}
+
+const {
+  variant = 'default',
+  title = 'Stay Inspired',
+  description = 'Subscribe to receive updates on our latest works, techniques, and gemstone insights.'
+} = Astro.props;
+---
+
+<div class={`newsletter-signup ${variant === 'minimal' ? 'minimal' : ''}`}>
+  {variant === 'default' && (
+    <div class="text-center mb-6">
+      <h3 class="text-2xl font-serif font-semibold text-gray-900 mb-2">
+        {title}
+      </h3>
+      <p class="text-gray-600">
+        {description}
+      </p>
+    </div>
+  )}
+
+  <form
+    id="newsletter-form"
+    class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+  >
+    <input
+      type="email"
+      name="email"
+      placeholder="Enter your email"
+      required
+      class="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent"
+    />
+    <button
+      type="submit"
+      class="px-6 py-3 bg-brand-blue text-white font-medium rounded-md hover:bg-brand-blue/90 transition-colors"
+    >
+      Subscribe
+    </button>
+  </form>
+
+  <!-- Success/Error Messages -->
+  <div
+    id="newsletter-message"
+    class="hidden mt-4 p-3 rounded-md text-center text-sm"
+  ></div>
+
+  <p class="text-xs text-gray-500 text-center mt-3">
+    We respect your privacy. Unsubscribe at any time.
+  </p>
+</div>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement;
+  const messageDiv = document.getElementById('newsletter-message') as HTMLDivElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const email = formData.get('email') as string;
+
+    try {
+      // Show loading state
+      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Subscribing...';
+      submitBtn.disabled = true;
+
+      // TODO: Replace with your actual newsletter API endpoint
+      // For now, simulate success
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Show success message
+      messageDiv.textContent = 'Successfully subscribed! Check your email for confirmation.';
+      messageDiv.className = 'mt-4 p-3 rounded-md text-center text-sm bg-green-50 text-green-800';
+      messageDiv.classList.remove('hidden');
+
+      // Reset form
+      form.reset();
+
+      // Hide message after 5 seconds
+      setTimeout(() => {
+        messageDiv.classList.add('hidden');
+      }, 5000);
+
+      // Reset button
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+
+    } catch (error) {
+      // Show error message
+      messageDiv.textContent = 'Something went wrong. Please try again.';
+      messageDiv.className = 'mt-4 p-3 rounded-md text-center text-sm bg-red-50 text-red-800';
+      messageDiv.classList.remove('hidden');
+
+      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      submitBtn.textContent = 'Subscribe';
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .newsletter-signup.minimal {
+    padding: 1rem 0;
+  }
+</style>

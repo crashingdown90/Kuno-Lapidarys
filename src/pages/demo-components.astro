@@ -1,0 +1,298 @@
+---
+/**
+ * DEMO PAGE - UI/UX Components Showcase
+ * This page demonstrates all new components with dummy data
+ * URL: /demo-components
+ */
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import TestimonialCard from '@/components/TestimonialCard.astro';
+import NewsletterSignup from '@/components/NewsletterSignup.astro';
+import TrustSignals from '@/components/TrustSignals.astro';
+import FAQItem from '@/components/FAQItem.astro';
+import ProcessTimeline from '@/components/ProcessTimeline.astro';
+import ImageGallery from '@/components/ImageGallery.astro';
+import Button from '@/components/Button.astro';
+
+// Dummy Data
+const testimonials = [
+  {
+    name: 'Dr. Patricia Wong',
+    role: 'Private Collector, Singapore',
+    text: 'KUNO & Co. transformed my grandmother\'s rough emerald into an absolute masterpiece. The precision and artistry are unmatched. I\'ve since commissioned three more pieces.',
+    rating: 5,
+    project: 'Custom Emerald Faceting',
+  },
+  {
+    name: 'James Richardson',
+    role: 'Richardson Fine Jewelry, London',
+    text: 'As a third-generation jeweler, I\'ve worked with lapidaries worldwide. The team at KUNO consistently delivers exceptional quality with remarkable turnaround times.',
+    rating: 5,
+    project: 'Wholesale Partnership',
+  },
+  {
+    name: 'Maria Santos',
+    role: 'Interior Designer, Jakarta',
+    text: 'They restored a 19th-century carved jade piece that other workshops said was impossible. The result exceeded all expectations. True masters of their craft.',
+    rating: 5,
+    project: 'Antique Restoration',
+  },
+];
+
+const faqs = [
+  {
+    id: 'pricing',
+    question: 'How much does custom gem cutting cost?',
+    answer: 'Pricing depends on the stone type, size, complexity of cut, and finishing requirements. Generally, our custom faceting starts at $200 for smaller stones and can range up to several thousand dollars for large, complex pieces. We provide detailed quotes after consultation.',
+  },
+  {
+    id: 'timeline',
+    question: 'How long does a custom commission take?',
+    answer: 'Most custom projects take 2-4 weeks from initial consultation to completion. Complex pieces or large stones may require 6-8 weeks. Rush services are available for an additional fee. We provide timeline estimates during the consultation phase.',
+  },
+  {
+    id: 'sourcing',
+    question: 'Can you help me source a specific gemstone?',
+    answer: 'Absolutely! We have relationships with ethical suppliers worldwide. Whether you\'re looking for a rare specimen or a specific quality grade, we can source stones to match your requirements. This typically adds 1-2 weeks to the project timeline.',
+  },
+  {
+    id: 'repair',
+    question: 'Do you offer gemstone repair and restoration?',
+    answer: 'Yes, we specialize in restoring damaged or antique gemstones. This includes re-cutting chipped stones, re-polishing scratched surfaces, and even salvaging broken pieces. Each restoration is assessed individually to determine the best approach.',
+  },
+  {
+    id: 'visit',
+    question: 'Can I visit your workshop?',
+    answer: 'We welcome studio visits by appointment! This allows us to dedicate time to discuss your project in detail and show you our processes. Please contact us at least 48 hours in advance to schedule a visit.',
+  },
+];
+
+const galleryImages = [
+  {
+    src: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&h=600&fit=crop',
+    alt: 'Emerald gemstone close-up',
+    caption: 'Colombian emerald - 5.2 carats',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1611591437611-b2d130e06caf?w=600&h=600&fit=crop',
+    alt: 'Ruby gemstone',
+    caption: 'Burmese ruby - precision cut',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop',
+    alt: 'Sapphire collection',
+    caption: 'Ceylon sapphires - various cuts',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600&h=600&fit=crop',
+    alt: 'Diamond cutting process',
+    caption: 'Master craftsman at work',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop',
+    alt: 'Gemstone workshop tools',
+    caption: 'Precision cutting equipment',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600&h=600&fit=crop',
+    alt: 'Polished gemstones',
+    caption: 'Final polishing stage',
+  },
+];
+---
+
+<BaseLayout
+  title="UI/UX Components Demo"
+  description="Demonstration of all UI components with dummy data"
+>
+  <!-- Page Header -->
+  <Section>
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
+        UI/UX Components Demo
+      </h1>
+      <p class="text-lg text-gray-600 mb-8">
+        This page showcases all new components with dummy data for testing and demonstration purposes.
+      </p>
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 text-left">
+        <p class="text-sm text-yellow-800">
+          <strong>Note:</strong> This is a demo page for development purposes only.
+          Remove or restrict access before production deployment.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Trust Signals Component -->
+  <Section variant="light">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-8">
+        Trust Signals Component
+      </h2>
+      <TrustSignals />
+    </div>
+  </Section>
+
+  <!-- Process Timeline Component -->
+  <Section>
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">
+        Process Timeline Component
+      </h2>
+      <ProcessTimeline />
+    </div>
+  </Section>
+
+  <!-- Testimonials Component -->
+  <Section variant="tan">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">
+        Testimonials Component
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonials.map((testimonial) => (
+          <TestimonialCard {...testimonial} />
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- Image Gallery with Lightbox -->
+  <Section>
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">
+        Image Gallery with Lightbox
+      </h2>
+      <ImageGallery images={galleryImages} columns={3} />
+      <p class="text-center text-gray-600 mt-8 text-sm">
+        Click any image to open lightbox. Use arrow keys or buttons to navigate.
+      </p>
+    </div>
+  </Section>
+
+  <!-- FAQ Accordion -->
+  <Section variant="light">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">
+        FAQ Accordion Component
+      </h2>
+      <div class="bg-white rounded-lg shadow-sm p-6">
+        {faqs.map((faq) => (
+          <FAQItem
+            question={faq.question}
+            answer={faq.answer}
+            id={faq.id}
+          />
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- Newsletter Signup -->
+  <Section>
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-12">
+        Newsletter Signup Component
+      </h2>
+
+      <div class="space-y-12">
+        <!-- Default variant -->
+        <div class="bg-gray-50 rounded-lg p-8">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 text-center">
+            Default Variant
+          </h3>
+          <NewsletterSignup />
+        </div>
+
+        <!-- Minimal variant -->
+        <div class="bg-gray-50 rounded-lg p-8">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 text-center">
+            Minimal Variant
+          </h3>
+          <NewsletterSignup variant="minimal" />
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Component Usage Guide -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-8 text-white">
+        Component Usage Guide
+      </h2>
+
+      <div class="bg-gray-900 rounded-lg p-6 text-gray-300 space-y-6">
+        <div>
+          <h3 class="text-xl font-semibold text-white mb-2">TrustSignals</h3>
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import TrustSignals from '@/components/TrustSignals.astro';
+
+&lt;TrustSignals /&gt;
+
+// Or with custom stats:
+&lt;TrustSignals stats={[
+  { value: '25', label: 'Years', suffix: '+' },
+  { value: '1000', label: 'Clients' }
+]} /&gt;</code></pre>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold text-white mb-2">TestimonialCard</h3>
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import TestimonialCard from '@/components/TestimonialCard.astro';
+
+&lt;TestimonialCard
+  name="John Doe"
+  role="CEO, Company"
+  text="Amazing work!"
+  rating={5}
+  project="Custom Project"
+/&gt;</code></pre>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold text-white mb-2">ImageGallery</h3>
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import ImageGallery from '@/components/ImageGallery.astro';
+
+const images = [
+  { src: '/image1.jpg', alt: 'Description', caption: 'Caption' }
+];
+
+&lt;ImageGallery images={images} columns={3} /&gt;</code></pre>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold text-white mb-2">ProcessTimeline</h3>
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import ProcessTimeline from '@/components/ProcessTimeline.astro';
+
+&lt;ProcessTimeline /&gt; // Uses default steps</code></pre>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold text-white mb-2">FAQItem</h3>
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import FAQItem from '@/components/FAQItem.astro';
+
+&lt;FAQItem
+  id="unique-id"
+  question="Question here?"
+  answer="Answer here."
+/&gt;</code></pre>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold text-white mb-2">NewsletterSignup</h3>
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import NewsletterSignup from '@/components/NewsletterSignup.astro';
+
+&lt;NewsletterSignup variant="default" /&gt;
+&lt;NewsletterSignup variant="minimal" /&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <Button href="/" variant="outline">
+          Back to Homepage
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

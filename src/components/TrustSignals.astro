@@ -1,0 +1,44 @@
+---
+interface Stat {
+  value: string;
+  label: string;
+  suffix?: string;
+}
+
+interface Props {
+  stats?: Stat[];
+}
+
+const defaultStats: Stat[] = [
+  { value: '25', label: 'Years Experience', suffix: '+' },
+  { value: '10,000', label: 'Stones Cut', suffix: '+' },
+  { value: '500', label: 'Happy Clients', suffix: '+' },
+  { value: '15', label: 'Countries Served', suffix: '+' },
+];
+
+const { stats = defaultStats } = Astro.props;
+---
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
+  {stats.map((stat, index) => (
+    <div
+      class="text-center reveal-fade-up"
+      style={`transition-delay: ${index * 100}ms;`}
+    >
+      <div class="text-4xl md:text-5xl font-bold text-brand-blue mb-2 font-serif">
+        {stat.value}{stat.suffix || ''}
+      </div>
+      <div class="text-gray-600 text-sm md:text-base">
+        {stat.label}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  @media (max-width: 640px) {
+    .grid {
+      gap: 2rem;
+    }
+  }
+</style>
