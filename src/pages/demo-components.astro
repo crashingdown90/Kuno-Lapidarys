@@ -226,65 +226,65 @@ const galleryImages = [
       <div class="bg-gray-900 rounded-lg p-6 text-gray-300 space-y-6">
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">TrustSignals</h3>
-          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import TrustSignals from '@/components/TrustSignals.astro';
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code set:html={`import TrustSignals from '@/components/TrustSignals.astro';
 
-&lt;TrustSignals /&gt;
+<TrustSignals />
 
 // Or with custom stats:
-&lt;TrustSignals stats={[
+<TrustSignals stats={[
   { value: '25', label: 'Years', suffix: '+' },
   { value: '1000', label: 'Clients' }
-]} /&gt;</code></pre>
+]} />`} /></pre>
         </div>
 
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">TestimonialCard</h3>
-          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import TestimonialCard from '@/components/TestimonialCard.astro';
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code set:html={`import TestimonialCard from '@/components/TestimonialCard.astro';
 
-&lt;TestimonialCard
+<TestimonialCard
   name="John Doe"
   role="CEO, Company"
   text="Amazing work!"
   rating={5}
   project="Custom Project"
-/&gt;</code></pre>
+/>`} /></pre>
         </div>
 
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">ImageGallery</h3>
-          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import ImageGallery from '@/components/ImageGallery.astro';
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code set:html={`import ImageGallery from '@/components/ImageGallery.astro';
 
 const images = [
   { src: '/image1.jpg', alt: 'Description', caption: 'Caption' }
 ];
 
-&lt;ImageGallery images={images} columns={3} /&gt;</code></pre>
+<ImageGallery images={images} columns={3} />`} /></pre>
         </div>
 
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">ProcessTimeline</h3>
-          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import ProcessTimeline from '@/components/ProcessTimeline.astro';
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code set:html={`import ProcessTimeline from '@/components/ProcessTimeline.astro';
 
-&lt;ProcessTimeline /&gt; // Uses default steps</code></pre>
+<ProcessTimeline /> // Uses default steps`} /></pre>
         </div>
 
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">FAQItem</h3>
-          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import FAQItem from '@/components/FAQItem.astro';
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code set:html={`import FAQItem from '@/components/FAQItem.astro';
 
-&lt;FAQItem
+<FAQItem
   id="unique-id"
   question="Question here?"
   answer="Answer here."
-/&gt;</code></pre>
+/>`} /></pre>
         </div>
 
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">NewsletterSignup</h3>
-          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code>import NewsletterSignup from '@/components/NewsletterSignup.astro';
+          <pre class="bg-black p-4 rounded overflow-x-auto text-sm"><code set:html={`import NewsletterSignup from '@/components/NewsletterSignup.astro';
 
-&lt;NewsletterSignup variant="default" /&gt;
-&lt;NewsletterSignup variant="minimal" /&gt;</code></pre>
+<NewsletterSignup variant="default" />
+<NewsletterSignup variant="minimal" />`} /></pre>
         </div>
       </div>
 
