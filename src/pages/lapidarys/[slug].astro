@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/Section.astro';
 import Button from '@/components/Button.astro';
+import PortableText from '@/components/PortableText.astro';
 import { getLapidaryBySlug, getAllLapidarys, urlFor } from '@/lib/sanity';
 
 export async function getStaticPaths() {
@@ -86,26 +87,16 @@ const portraitUrl = lapidary.portrait
         <!-- Bio & Gallery -->
         <div class="lg:col-span-3">
           {/* Biography */}
-          <div class="mb-12">
-            <h2 class="text-2xl font-serif font-semibold text-gray-900 mb-6">
-              Biography
-            </h2>
-            <div class="prose prose-lg max-w-none text-gray-600">
-              {/* Portable Text bio would be rendered here */}
-              <p>
-                [Artist biography would be rendered here using Portable Text renderer]
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                exercitation ullamco laboris.
-              </p>
-              <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-              </p>
+          {lapidary.bio && (
+            <div class="mb-12">
+              <h2 class="text-2xl font-serif font-semibold text-gray-900 mb-6">
+                Biography
+              </h2>
+              <div class="prose prose-lg max-w-none text-gray-600">
+                <PortableText value={lapidary.bio} />
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Work Gallery */}
           {lapidary.gallery && lapidary.gallery.length > 0 && (

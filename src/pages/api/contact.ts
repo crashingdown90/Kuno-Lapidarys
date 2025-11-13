@@ -1,6 +1,36 @@
 import type { APIRoute } from 'astro';
 
-// Simple in-memory rate limiting (better to use Redis in production)
+/**
+ * RATE LIMITING NOTE FOR PRODUCTION:
+ *
+ * ⚠️ WARNING: In-memory rate limiting does NOT work in serverless environments!
+ * Each request may be handled by a different instance, so the rate limit map
+ * will not be shared across requests.
+ *
+ * For production deployment on Vercel, implement one of these solutions:
+ *
+ * 1. Vercel KV (Redis) - Recommended:
+ *    ```bash
+ *    npm install @vercel/kv
+ *    ```
+ *    ```typescript
+ *    import { kv } from '@vercel/kv';
+ *    const key = `rate_limit:${ip}`;
+ *    const count = await kv.incr(key);
+ *    if (count === 1) await kv.expire(key, 3600); // 1 hour
+ *    if (count > 5) return error;
+ *    ```
+ *
+ * 2. Upstash Redis:
+ *    ```bash
+ *    npm install @upstash/redis
+ *    ```
+ *    Similar implementation to Vercel KV
+ *
+ * 3. Vercel Edge Middleware with rate limiting
+ *
+ * Current implementation is kept for development only.
+ */
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 function checkRateLimit(ip: string): boolean {

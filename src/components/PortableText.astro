@@ -1,0 +1,61 @@
+---
+import { PortableText as AstroPortableText } from 'astro-portabletext';
+import { urlFor } from '@/lib/sanity';
+
+interface Props {
+  value: any;
+  class?: string;
+}
+
+const { value, class: className } = Astro.props;
+
+// Custom components for Portable Text rendering
+const components = {
+  type: {
+    image: ({ value }: any) => {
+      const imageUrl = urlFor(value).width(1200).url();
+      return `
+        <figure class="my-8">
+          <img
+            src="${imageUrl}"
+            alt="${value.alt || ''}"
+            class="w-full rounded-lg"
+          />
+          ${value.caption ? `<figcaption class="mt-2 text-sm text-gray-600 text-center italic">${value.caption}</figcaption>` : ''}
+        </figure>
+      `;
+    },
+  },
+  block: {
+    h1: ({ children }: any) => `<h1 class="text-4xl font-serif font-bold mt-12 mb-4">${children}</h1>`,
+    h2: ({ children }: any) => `<h2 class="text-3xl font-serif font-bold mt-10 mb-4">${children}</h2>`,
+    h3: ({ children }: any) => `<h3 class="text-2xl font-serif font-semibold mt-8 mb-3">${children}</h3>`,
+    h4: ({ children }: any) => `<h4 class="text-xl font-serif font-semibold mt-6 mb-2">${children}</h4>`,
+    normal: ({ children }: any) => `<p class="mb-4 leading-relaxed">${children}</p>`,
+    blockquote: ({ children }: any) => `<blockquote class="border-l-4 border-brand-brown pl-4 my-6 italic text-gray-700">${children}</blockquote>`,
+  },
+  list: {
+    bullet: ({ children }: any) => `<ul class="list-disc list-inside mb-4 space-y-2">${children}</ul>`,
+    number: ({ children }: any) => `<ol class="list-decimal list-inside mb-4 space-y-2">${children}</ol>`,
+  },
+  listItem: {
+    bullet: ({ children }: any) => `<li class="ml-4">${children}</li>`,
+    number: ({ children }: any) => `<li class="ml-4">${children}</li>`,
+  },
+  marks: {
+    strong: ({ children }: any) => `<strong class="font-semibold">${children}</strong>`,
+    em: ({ children }: any) => `<em class="italic">${children}</em>`,
+    underline: ({ children }: any) => `<u>${children}</u>`,
+    'strike-through': ({ children }: any) => `<s>${children}</s>`,
+    link: ({ children, value }: any) => {
+      const target = value?.blank ? '_blank' : '_self';
+      const rel = value?.blank ? 'noopener noreferrer' : '';
+      return `<a href="${value?.href || '#'}" target="${target}" rel="${rel}" class="text-brand-blue hover:text-brand-brown underline transition-colors">${children}</a>`;
+    },
+  },
+};
+---
+
+<div class={className}>
+  <AstroPortableText value={value} components={components} />
+</div>
